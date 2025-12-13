@@ -1,0 +1,147 @@
+<div class="page" [class.dark]="darkMode">
+  <div class="editor-wrapper container-fluid">
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="m-0">
+        {{ isEditMode ? "Edit Template" : "Create Template" }}
+      </h2>
+
+      <!-- Dark/Light Toggle -->
+      <button
+        class="theme-toggle-btn"
+        (click)="toggleTheme()"
+        title="Toggle theme"
+      >
+        {{ darkMode ? "🌙" : "☀️" }}
+      </button>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div id="toolbar" class="toolbar d-flex align-items-center flex-wrap">
+      <!-- LEFT TOOLBAR -->
+      <div class="toolbar-left d-flex align-items-center flex-wrap gap-1">
+        <button
+          class="toolbar-btn"
+          title="Bold"
+          [class.active]="activeFormats.bold"
+          (click)="applyFormat('bold')"
+        >
+          <b>B</b>
+        </button>
+
+        <button
+          class="toolbar-btn"
+          title="Italic"
+          [class.active]="activeFormats.italic"
+          (click)="applyFormat('italic')"
+        >
+          <i>I</i>
+        </button>
+
+        <button
+          class="toolbar-btn"
+          title="Underline"
+          [class.active]="activeFormats.underline"
+          (click)="applyFormat('underline')"
+        >
+          <u>U</u>
+        </button>
+
+        <button
+          class="toolbar-btn"
+          title="Code"
+          [class.active]="activeFormats['code-block']"
+          (click)="applyFormat('code-block')"
+        >
+          &lt;/&gt;
+        </button>
+
+        <button class="toolbar-btn" title="Link" (click)="openLinkModal()"> <i class="bi bi-link-45deg"></i>
+        </button>
+
+        <button class="toolbar-btn" title="Attach File" (click)="attachFile()">  <i class="bi bi-paperclip"></i>
+        </button>
+
+        <!-- MORE OPTIONS -->
+        <div class="more-wrapper">
+          <button
+            class="toolbar-btn"
+            (click)="toggleMoreOptions()"
+            title="More options"
+          >
+            ⋯
+          </button>
+
+          <div
+            class="more-menu"
+            *ngIf="showMoreOptions"
+            (mouseleave)="showMoreOptions = false"
+          >
+            <button (click)="applyOption('header1')">Header 1</button>
+            <button (click)="applyOption('header2')">Header 2</button>
+            <button (click)="applyOption('color')">Text Color</button>
+            <button (click)="applyOption('background')">Highlight</button>
+            <button (click)="applyOption('blockquote')">Blockquote</button>
+            <button (click)="applyOption('image')">Image</button>
+            <button (click)="applyOption('video')">Video</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT TOOLBAR -->
+      <div class="ms-auto">
+        <button class="toolbar-btn" title="Delete all" (click)="deleteAll()">
+          🗑️
+        </button>
+      </div>
+    </div>
+
+    <!-- EDITOR -->
+    <div id="editor" class="editor mt-3"></div>
+
+    <!-- MENTIONS -->
+    <ul
+      *ngIf="showMentions"
+      class="mention-dropdown"
+      [style.top.px]="mentionTop"
+      [style.left.px]="mentionLeft"
+    >
+      <li
+        *ngFor="let item of filteredMentions"
+        (mousedown)="selectMention(item)"
+      >
+        {{ item.value }}
+      </li>
+    </ul>
+
+    <!-- LINK MODAL -->
+    <div class="link-modal" *ngIf="showLinkModal">
+      <div class="link-modal-content">
+        <h5>Insert Link</h5>
+
+        <label>Text to display</label>
+        <input type="text" [(ngModel)]="linkText" />
+
+        <label>Address</label>
+        <input type="text" [(ngModel)]="linkUrl" />
+
+        <div class="link-modal-actions">
+          <button class="btn btn-secondary" (click)="closeLinkModal()">
+            Cancel
+          </button>
+          <button class="btn btn-primary" (click)="insertLink()">Insert</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVE -->
+    <div class="d-flex flex-row justify-content-end gap-1">
+      <div class="text-end mt-3">
+        <button class="btn btn-primary px-4" (click)="save()">Save</button>
+      </div>
+      <div class="text-end mt-3">
+        <button class="btn btn-primary px-4" routerLink="/templates">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

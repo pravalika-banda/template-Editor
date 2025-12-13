@@ -1,0 +1,17 @@
+<div class="preview-container" *ngIf="!loading; else loadingTpl">
+  <h2 class="template-title">{{ template?.name }}</h2>
+
+  <div class="template-content" [innerHTML]="template?.content">
+    <!-- This will display HTML content stored in the template -->
+  </div>
+
+  <button class="btn btn-primary mt-3" routerLink="/templates">
+    ← Back to Templates
+  </button>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">
+    <p>Loading template...</p>
+  </div>
+</ng-template>

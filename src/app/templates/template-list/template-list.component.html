@@ -1,0 +1,51 @@
+<div class="container mt-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-semibold">Contract Templates</h2>
+
+    <button class="btn btn-primary" [routerLink]="['/templates/create']">
+      + Create Template
+    </button>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 text-muted">Loading templates...</p>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!loading && templates.length === 0" class="alert alert-info">
+    No templates found. Create your first template.
+  </div>
+
+  <!-- Template List -->
+  <div class="list-group" *ngIf="!loading">
+    <div
+      *ngFor="let t of templates; trackBy: trackById"
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <div>
+        <h5 class="mb-1">{{ t.name }}</h5>
+        <small class="text-muted">Template ID: {{ t.id }}</small>
+      </div>
+
+      <div class="btn-group">
+        <button
+          class="btn btn-outline-secondary"
+          (click)="previewTemplate(t.id)"
+        >
+           <i class="bi bi-eye"></i> preview
+        </button>
+
+        <button class="btn btn-outline-primary" (click)="editTemplate(t.id)"><i class="bi bi-pencil"></i>
+        Edit
+        </button>
+
+        <button class="btn btn-outline-danger" (click)="deleteTemplate(t.id)"> <i class="bi bi-trash"></i> 
+         Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
