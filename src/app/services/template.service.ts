@@ -9,9 +9,9 @@ export interface TemplateModel {
   fields?: any[];
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class TemplateService {
-  private base = 'http://localhost:3000/templates';
+  private base = "http://localhost:3000/templates";
 
   constructor(private http: HttpClient) {}
 
@@ -25,6 +25,10 @@ export class TemplateService {
 
   createTemplate(template: Partial<TemplateModel>): Observable<TemplateModel> {
     return this.http.post<TemplateModel>(this.base, template);
+  }
+
+  uploadFile(data: FormData) {
+    return this.http.post("http://localhost:3000/upload", data);
   }
 
   updateTemplate(

@@ -16,6 +16,18 @@
       </button>
     </div>
 
+    <!-- TEMPLATE NAME INPUT -->
+    <div class="mb-3">
+      <label for="templateName" class="form-label">Template Name</label>
+      <input
+        type="text"
+        id="templateName"
+        class="form-control"
+        placeholder="Enter template name"
+        [(ngModel)]="templateName"
+      />
+    </div>
+
     <!-- TOOLBAR -->
     <div id="toolbar" class="toolbar d-flex align-items-center flex-wrap">
       <!-- LEFT TOOLBAR -->
@@ -56,10 +68,12 @@
           &lt;/&gt;
         </button>
 
-        <button class="toolbar-btn" title="Link" (click)="openLinkModal()"> <i class="bi bi-link-45deg"></i>
+        <button class="toolbar-btn" title="Link" (click)="openLinkModal()">
+          <i class="bi bi-link-45deg"></i>
         </button>
 
-        <button class="toolbar-btn" title="Attach File" (click)="attachFile()">  <i class="bi bi-paperclip"></i>
+        <button class="toolbar-btn" title="Attach File" (click)="attachFile()">
+          <i class="bi bi-paperclip"></i>
         </button>
 
         <!-- MORE OPTIONS -->
@@ -98,6 +112,10 @@
 
     <!-- EDITOR -->
     <div id="editor" class="editor mt-3"></div>
+
+    <input type="file" (change)="onFileSelect($event)" />
+<button (click)="upload()">Upload</button>
+
 
     <!-- MENTIONS -->
     <ul
@@ -140,7 +158,9 @@
         <button class="btn btn-primary px-4" (click)="save()">Save</button>
       </div>
       <div class="text-end mt-3">
-        <button class="btn btn-primary px-4" routerLink="/templates">Cancel</button>
+        <button class="btn btn-primary px-4" routerLink="/templates">
+          Cancel
+        </button>
       </div>
     </div>
   </div>

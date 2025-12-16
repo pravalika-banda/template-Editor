@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Sticky Notes Board</title>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+  
+  <div class="falling-notes">
+    <!-- Floating sticky notes -->
+    <div class="note" style="left: 10%; animation-delay: 0s; background:#fff799; transform:rotate(5deg);"></div>
+    <div class="note" style="left: 25%; animation-delay: 2s; background:#ffd966; transform:rotate(-10deg);"></div>
+    <div class="note" style="left: 40%; animation-delay: 1s; background:#f9c74f; transform:rotate(8deg);"></div>
+    <div class="note" style="left: 60%; animation-delay: 3s; background:#a0c4ff; transform:rotate(-6deg);"></div>
+    <div class="note" style="left: 80%; animation-delay: 4s; background:#ffb6b9; transform:rotate(10deg);"></div>
+  </div>
+
+  <div class="welcome-container">
+    <h1>Welcome to Sticky Notes Board</h1>
+    <p>Capture your ideas, tasks, and memories in one colorful place.</p>
+  </div>
+
+  <script>
+    // After 4 seconds, fade out and redirect
+    setTimeout(() => {
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2000);
+    }, 4000);
+  </script>
+</body>
+</html>
+
+/* ====== Welcome Page ====== */
+body {
+  margin: 0;
+  font-family: 'Shadows Into Light', cursive;
+  background: linear-gradient(135deg, #fff9c4, #ffe082, #ffecb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column;
+  text-align: center;
+  color: #333;
+  transition: opacity 2s ease;
+}
+
+body.fade-out {
+  opacity: 0;
+}
+
+/* Floating sticky notes container */
+.falling-notes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Each sticky note */
+.note {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  opacity: 0.85;
+  border-radius: 6px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fall 10s linear infinite;
+}
+
+/* Animation for falling notes */
+@keyframes fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Welcome text */
+.welcome-container {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 40px 60px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 2s ease forwards;
+}
+
+.welcome-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.welcome-container p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sticky Notes Board</title>
+  <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="falling-notes-bg">
+    <div class="note" style="left: 10%; background:#fff799; animation-delay: 0s;"></div>
+    <div class="note" style="left: 25%; background:#ffd966; animation-delay: 2s;"></div>
+    <div class="note" style="left: 45%; background:#f9c74f; animation-delay: 1s;"></div>
+    <div class="note" style="left: 65%; background:#a0c4ff; animation-delay: 3s;"></div>
+    <div class="note" style="left: 80%; background:#ffb6b9; animation-delay: 4s;"></div>
+  </div>
+
+  <!-- Confirm Hide/Unhide Modal -->
+<div id="confirmModal" class="modal">
+  <div class="modal-content">
+    <p id="confirmMessage"></p>
+    <div class="modal-buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="cancelBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+  <h1>📝 Sticky Notes Board</h1>
+
+  <form id="noteForm">
+    <textarea id="noteText" placeholder="Write your note here..."></textarea>
+    <input type="color" id="noteColor" value="#fff799">
+    <input type="datetime-local" id="noteReminder">
+    <button type="button" id="remindMeBtn">🔔 Remind Me</button>
+    <button type="button" id="addNoteBtn">➕ Add</button>
+    <button type="button" id="speakBtn">🎙️</button>
+  </form>
+
+  <div id="board"></div>
+
+  <footer>
+    <p>✨ Designed with ❤️ by <span>Keerthana</span> | Stored Locally ✨</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+/* ===== Background Falling Notes ===== */
+.falling-notes-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.falling-notes-bg .note {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  opacity: 0.7;
+  border-radius: 8px;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+  animation: fallBg 8s linear infinite;
+}
+
+@keyframes fallBg {
+  0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(120vh) rotate(360deg); opacity: 0; }
+}
+
+/* ===== Global Styles ===== */
+body {
+  font-family: 'Shadows Into Light', cursive;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #333;
+  background: linear-gradient(270deg, #ffecd2, #fcb69f, #ffd6a5, #f9c74f);
+  background-size: 800% 800%;
+  animation: bgmove 15s infinite alternate ease-in-out;
+  overflow-y: auto;
+}
+
+@keyframes bgmove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ===== Header ===== */
+h1 {
+  background: rgba(255, 255, 255, 0.6);
+  width: 100%;
+  margin: 0;
+  padding: 15px 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* ===== Note Form ===== */
+#noteForm {
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+#noteText {
+  width: 250px;
+  height: 70px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: none;
+  background-color: #fffef7;
+}
+
+#noteColor,
+#noteReminder {
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  padding: 4px;
+}
+
+/* ===== Buttons ===== */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(45deg, #ffd966, #ffcc33);
+  padding: 8px 12px;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #ffb700, #ffd54f);
+}
+
+/* ===== Board Area ===== */
+#board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  width: 90%;
+  min-height: 70vh;
+  border: 2px dashed #ccc;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+/* ===== Individual Note ===== */
+.note {
+  position: relative;
+  width: 160px;
+  min-height: 140px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.25);
+  user-select: none;
+  animation: drop 0.3s ease;
+  transform: rotate(calc(-5deg + 10deg * var(--rotate)));
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.note:hover {
+  transform: scale(1.05) rotate(calc(-5deg + 10deg * var(--rotate)));
+}
+
+/* Timestamp at bottom */
+.note small {
+  font-size: 11px;
+  display: block;
+  margin-top: 8px;
+  color: #555;
+  text-align: right;
+  border-top: 1px dashed rgba(0,0,0,0.2);
+  padding-top: 4px;
+}
+
+/* Pin dot effect */
+.note::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: crimson;
+  border-radius: 50%;
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ===== Buttons inside Notes ===== */
+.note-btns {
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  display: flex;
+  gap: 4px;
+}
+.note-btns button {
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  border-radius: 50%;
+  padding: 0;
+}
+
+/* ===== Reminder Highlight ===== */
+.note.reminder-active {
+  box-shadow: 0 0 15px 3px rgba(255, 99, 71, 0.6);
+  border: 2px solid tomato;
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1) rotate(calc(-5deg + 10deg * var(--rotate))); }
+  100% { transform: scale(1.05) rotate(calc(-5deg + 10deg * var(--rotate))); }
+}
+/* ===== Hidden Notes ===== */
+.note.hidden {
+  filter: blur(5px);
+  opacity: 0.4;
+  pointer-events: none; /* prevents entire note from being clicked */
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* But keep the eye button clickable */
+.note.hidden .note-btns button:nth-child(2) { /* 👁️ button */
+  pointer-events: auto !important;
+  opacity: 1;
+}
+
+/* Hide text & time only */
+.note.hidden p,
+.note.hidden small,
+.note.hidden .reminder {
+  visibility: hidden;
+}
+
+/* ===== Animations ===== */
+@keyframes drop {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== Footer ===== */
+footer {
+  width: 100%;
+  background: rgba(255,255,255,0.6);
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+  border-top: 2px solid #f9c74f;
+  margin-top: auto;
+}
+footer p {
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+footer p span {
+  color: #e63946;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 600px) {
+  #noteText { width: 90%; }
+  #board { width: 95%; }
+  .note { width: 120px; font-size: 14px; }
+}
+
+
+/* ===== Confirmation Modal ===== */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.modal-content {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: popIn 0.3s ease;
+}
+.modal-content p {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.modal-buttons button {
+  border: none;
+  padding: 8px 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#yesBtn {
+  background: #4CAF50;
+  color: white;
+}
+#cancelBtn {
+  background: #f44336;
+  color: white;
+}
+.modal-buttons button:hover {
+  transform: scale(1.1);
+}
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+//  Welcome Screen Fade-Out and Transition
+window.addEventListener("load", () => {
+  const welcome = document.getElementById("welcome-screen");
+  const app = document.getElementById("app");
+
+  // Show welcome screen for 4 seconds, then fade out
+  setTimeout(() => {
+    welcome.style.transition = "opacity 1s ease";
+    welcome.style.opacity = "0";
+
+    // Hide welcome screen completely, show main app
+    setTimeout(() => {
+      welcome.style.display = "none";
+      app.style.display = "block";
+    }, 1000);
+  }, 4000);
+});
+
+// ======= ELEMENTS =======
+const noteForm = document.getElementById("noteForm");
+const board = document.getElementById("board");
+const noteText = document.getElementById("noteText");
+const noteColor = document.getElementById("noteColor");
+const reminderInput = document.getElementById("noteReminder");
+const addBtn = document.getElementById("addNoteBtn");
+const speakBtn = document.getElementById("speakBtn");
+// ======= HIDE / UNHIDE CONFIRMATION MODAL =======
+const modal = document.getElementById("confirmModal");
+const confirmMsg = document.getElementById("confirmMessage");
+const yesBtn = document.getElementById("yesBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+let targetNote = null; // stores which note is being toggled
+
+
+// ======= REMIND ME BUTTON (Real-time Reminder Scheduling) =======
+const remindMeBtn = document.getElementById("remindMeBtn");
+
+if (remindMeBtn) {
+  remindMeBtn.onclick = async () => {
+    const reminderTime = prompt("Set reminder (e.g., 2025-11-10T22:30):");
+    if (!reminderTime) return;
+
+    const date = new Date(reminderTime);
+    if (isNaN(date.getTime())) {
+      return alert("❌ Invalid date/time format! Use YYYY-MM-DDTHH:MM format.");
+    }
+
+    // Check permission for notifications
+    const hasPerm = await ensureNotificationPermission();
+    if (!hasPerm) {
+      alert("🔕 Notifications are blocked! Reminder will use alert fallback.");
+    }
+
+    // Set the reminder input field for next note addition
+    reminderInput.value = reminderTime;
+    alert("✅ Reminder time set successfully! Add your note now.");
+
+    // If there’s already text in the note box, auto-create a note
+    if (noteText.value.trim()) {
+      addBtn.click(); // trigger add note function
+    }
+  };
+}
+
+
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+const scheduledTimers = new Map(); // map of note.id -> timeoutId
+
+// ======= UTILS =======
+function saveNotes() {
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
+function findNoteById(id) {
+  return notes.find(n => n.id === id);
+}
+function log(...args){ console.log("[StickyNotes]", ...args); }
+
+// ======= NOTIFICATIONS PERMISSION =======
+async function ensureNotificationPermission() {
+  if (!("Notification" in window)) {
+    log("Notification API not supported.");
+    return false;
+  }
+  if (Notification.permission === "granted") return true;
+  if (Notification.permission === "denied") return false;
+  try {
+    const perm = await Notification.requestPermission();
+    return perm === "granted";
+  } catch (e) {
+    return false;
+  }
+}
+
+// ======= VOICE TO TEXT (optional) =======
+if ("webkitSpeechRecognition" in window) {
+  const recognition = new webkitSpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.continuous = false;
+  speakBtn.onclick = () => recognition.start();
+  recognition.onresult = (e) => { noteText.value += e.results[0][0].transcript + " "; };
+} else {
+  if (speakBtn) speakBtn.style.display = "none";
+}
+
+// ======= RENDER / CREATE NOTE ELEMENT =======
+function createNoteElement(note) {
+  const div = document.createElement("div");
+  div.dataset.id = note.id;
+  div.classList.add("note");
+if (note.hidden) {
+  div.classList.add("hidden");
+} else {
+  div.classList.add("visible");
+}
+ div.style.background = note.color || "#fff799";
+  div.style.setProperty("--rotate", Math.random());
+
+  const reminderHTML = note.reminder
+    ? `<small class="reminder">⏰ ${new Date(note.reminder).toLocaleString()}</small>`
+    : "";
+
+  div.innerHTML = `
+    <div class="note-btns">
+      <button onclick="editNote(${note.id})">✏️</button>
+      <button onclick="toggleHide(${note.id})">👁️</button>
+      <button onclick="deleteNote(${note.id})">🗑️</button>
+    </div>
+    <p>${escapeHtml(note.text)}</p>
+    ${reminderHTML}
+    <small class="created">🕒 ${note.time || ""}</small>
+  `;
+
+  if (note.reminder && !note.reminded) {
+    const now = new Date();
+    const r = new Date(note.reminder);
+    if (r <= now) div.classList.add("reminder-active");
+  }
+
+  return div;
+}
+
+function renderAllNotes() {
+  board.innerHTML = "";
+  notes.forEach(n => board.appendChild(createNoteElement(n)));
+}
+
+// escape html to avoid injection when rendering user text
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ======= SCHEDULE / TRIGGER REMINDERS =======
+function scheduleReminder(note) {
+  // clear previous timer if exists
+  if (scheduledTimers.has(note.id)) {
+    clearTimeout(scheduledTimers.get(note.id));
+    scheduledTimers.delete(note.id);
+  }
+  if (!note.reminder || note.reminded) return;
+
+  const remindAt = new Date(note.reminder).getTime();
+  if (isNaN(remindAt)) {
+    log("Invalid reminder for note", note.id, note.reminder);
+    return;
+  }
+
+  const now = Date.now();
+  const delay = remindAt - now;
+
+  if (delay <= 0) {
+    // already due — trigger immediately (but don't block UI)
+    triggerReminder(note);
+    return;
+  }
+
+  const t = setTimeout(() => {
+    triggerReminder(note);
+    scheduledTimers.delete(note.id);
+  }, delay);
+
+  scheduledTimers.set(note.id, t);
+  log(`Scheduled reminder for note ${note.id} in ${Math.round(delay/1000)}s`);
+}
+
+async function triggerReminder(note) {
+  // mark visually first
+  renderAllNotes();
+
+  const hasPerm = await ensureNotificationPermission();
+
+  if (hasPerm) {
+    try {
+      new Notification("Sticky Notes Reminder", {
+        body: note.text,
+        icon: "https://cdn-icons-png.flaticon.com/512/1827/1827349.png",
+      });
+    } catch (e) {
+      log("Notification error:", e);
+    }
+  } else {
+    // fallback
+    alert(`⏰ Reminder: ${note.text}`);
+  }
+
+  // visual pulse on the specific note element
+  const nodes = Array.from(document.querySelectorAll(".note"));
+  const idx = notes.findIndex(n => n.id === note.id);
+  if (nodes[idx]) {
+    nodes[idx].classList.add("reminder-active");
+    // remove pulse after a while (optional)
+    setTimeout(() => nodes[idx] && nodes[idx].classList.remove("reminder-active"), 15000);
+  }
+
+  // mark as reminded and save
+  note.reminded = true;
+  saveNotes();
+  renderAllNotes();
+}
+
+// periodic fallback check (in case setTimeouts were lost or missed)
+setInterval(() => {
+  const now = Date.now();
+  notes.forEach(n => {
+    if (n.reminder && !n.reminded) {
+      const remindAt = new Date(n.reminder).getTime();
+      if (!isNaN(remindAt) && remindAt <= now) {
+        log("Fallback trigger for note", n.id);
+        triggerReminder(n);
+      }
+    }
+  });
+}, 10000); // check every 10s
+
+// ======= CRUD: add / edit / delete / hide =======
+addBtn.onclick = async () => {
+  const text = noteText.value.trim();
+  if (!text) return alert("Please write a note first!");
+
+  const currentTime = new Date().toLocaleString();
+  const note = {
+    id: Date.now(),
+    text,
+    color: noteColor.value || "#fff799",
+    reminder: reminderInput.value || null,
+    reminded: false,
+    hidden: false,
+    time: currentTime
+  };
+
+  notes.push(note);
+  saveNotes();
+  renderAllNotes();
+
+  // schedule immediately
+  scheduleReminder(note);
+
+  // clear inputs
+  noteText.value = "";
+  reminderInput.value = "";
+};
+
+function editNote(id) {
+  const note = findNoteById(id);
+  if (!note) return;
+  const newText = prompt("Edit your note:", note.text);
+  if (newText === null) return;
+  if (newText.trim() !== note.text) {
+    if (confirm("Save changes?")) {
+      note.text = newText.trim();
+      saveNotes();
+      renderAllNotes();
+    }
+  }
+}
+
+function toggleHide(id) {
+  const note = findNoteById(id);
+  if (!note) return;
+
+  // Set the current note as target
+  targetNote = note;
+
+  // Show modal with the correct message
+  confirmMsg.textContent = note.hidden
+    ? "Do you want to unhide this note?"
+    : "Are you sure you want to hide this note?";
+
+  modal.style.display = "flex";
+}
+// ======= Modal Buttons Logic =======
+yesBtn.addEventListener("click", () => {
+  if (targetNote) {
+    // Toggle hide/unhide
+    targetNote.hidden = !targetNote.hidden;
+    saveNotes();
+
+    const noteDiv = document.querySelector(`[data-id="${targetNote.id}"]`);
+    if (noteDiv) {
+      noteDiv.classList.toggle("hidden", targetNote.hidden);
+      noteDiv.classList.toggle("visible", !targetNote.hidden);
+    } else {
+      renderAllNotes(); // fallback
+    }
+
+    // Optional visual confirmation
+    alert(targetNote.hidden ? "✅ Note hidden successfully!" : "👁️ Note is now visible again!");
+  }
+
+  modal.style.display = "none";
+  targetNote = null;
+});
+
+cancelBtn.addEventListener("click", () => {
+  modal.style.display = "none";
+  targetNote = null;
+});
+
+// Hide modal if background is clicked
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+    targetNote = null;
+  }
+});
+
+function deleteNote(id) {
+  if (!confirm("Delete this note?")) return;
+  notes = notes.filter(n => n.id !== id);
+  saveNotes();
+  renderAllNotes();
+}
+
+// ======= ON LOAD: render and schedule reminders for saved notes =======
+(async function init() {
+  renderAllNotes();
+  // ask permission early (optional) — will show browser prompt
+  ensureNotificationPermission().then(p => log("Notification permission:", p));
+  // schedule reminders for saved notes
+  notes.forEach(n => {
+    if (n.reminder && !n.reminded) scheduleReminder(n);
+  });
+})();
+
+// ======= helper: saveNotes =======
+function saveNotes() {
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+// ======= expose findNoteById globally for buttons used inside HTML (edit/delete) =======
+window.editNote = editNote;
+window.deleteNote = deleteNote;
+window.toggleHide = toggleHide;
+
+// ======= small debug helper =======
+log("StickyNotes script loaded. Notes count:", notes.length);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Goal: Learn Angular basics + build a small frontend project.
+
+Topics to cover
+
+Angular Basics
+
+Components, Modules
+
+Templates, Data binding (Interpolation, Property binding, Event binding)
+
+Directives (*ngIf, *ngFor, [ngClass], [ngStyle])
+
+Services & Dependency Injection
+
+Routing (RouterModule, navigate, routerLink)
+
+Forms
+
+Template-driven
+
+Reactive forms
+
+HTTP Client
+
+HttpClient for GET, POST, PUT, DELETE
+
+Consuming backend APIs
+
+State management
+
+Simple BehaviorSubject or Signal
+
+Project
+
+Mini dashboard or user CRUD interface
+
+Practice
+
+Make a small ToDo app or User Management app
+
+Call dummy APIs first (https://jsonplaceholder.typicode.com
+)
+
+Presentation tip
+
+While presenting frontend:
+
+Explain components → services → API calls → data binding
+
+Show live demo
+
+Keep code clean & modular
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+***mongodb+srv://pravalikabanda4_db_user:pravalika@1407@cluster0.iivtq5n.mongodb.net/ ***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mongodb+srv://<db_username>:<db_password>@cluster0.iivtq5n.mongodb.net/
+
+
+
+
+
+
+
+
+
+Dear Dattatreya Gundeti I hope you are doing well. If you are available, I would like to connect with you for a code review of the Angular task. Please let me know a suitable time. Thank you.
+
+
+
+
+
+
+
+
+
+
+function createCounters() {
+  let arr = [];
+  for (var i = 0; i < 3; i++) {
+    arr.push(function() {
+      return i;
+    });
+  }
+  return arr;
+}
+
+const counters = createCounters();
+console.log(counters[0](), counters[1](), counters[2]());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+constructor(private http:Httpclient)
+
+this.http.get<book[]>(apiurl)
+
+
+
+this.http.post<book>(apiurl,book)
+this.http.put<book>(`${this.apiurl}/${id},book)
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+  <h1 class="title">📚 Book Collection</h1>
+
+  <!-- Add Book Button -->
+  <div class="top-actions">
+    <button routerLink="/AddBook" class="btn-add">➕ Add New Book</button>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="loader-container">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Books Grid -->
+  <div class="books-grid" *ngIf="!loading && books.length> 0"> 
+    <div class="book-card" *ngFor="let book of books">
+       <img [src]="book.coverUrl" alt="{{ book.title }}" class="book-img"/>
+
+
+      <p><strong>Author:</strong> {{ book.author }}</p>
+      <h3 class="book-title">{{ book.title | uppercase}}</h3>
+      <p><strong>Price:</strong> {{ book.price  |currency}}</p>
+      <p class="book-desc">{{book.description |titlecase}}</p>
+
+      <div class="actions">
+        <!-- Edit -->
+        <button 
+          (click)="editBook(book._id)"
+          class="btn-edit">
+          ✏️ Edit
+        </button>
+
+        <!-- Delete -->
+        <button 
+          (click)="deleteBook(book._id)" 
+          class="btn-delete">
+          🗑️ Delete
+        </button>
+
+        <!-- Details -->
+        <button 
+          [routerLink]="['/BookDetail']"
+          [queryParams]="{ id: book._id }"
+          class="btn-details">
+          🔍 Details
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Books Message -->
+  <div class="no-books" *ngIf="!loading && books.length === 0">
+    <p>No books available. Add your first book!</p>
+
+  </div>
+</div>

@@ -1,0 +1,43 @@
+{
+  "templates": [
+    {
+      "id": 1,
+      "name": "Contract A",
+      "content": "<p>Hello {{name}}</p>",
+      "fields": [
+        {
+          "name": "name",
+          "type": "text",
+          "sample": "John Doe"
+        }
+      ]
+    },
+    {
+      "id": 1765823449176,
+      "name": "pravalika",
+      "content": "<p>my name is pravalika</p>"
+    },
+    {
+      "id": 1765823470579,
+      "name": "prashanth ",
+      "content": "<p>my name is prashanth</p>"
+    },
+    {
+      "id": 1765824581020,
+      "name": "pravalika",
+      "content": "<p>my name</p>"
+    },
+    {
+      "id": 1765824818246,
+      "name": "pravalika",
+      "content": "<p>my name is pravailka</p>"
+    }
+  ],
+  "users": [
+    {
+      "id": "u1",
+      "displayName": "Alice Johnson",
+      "email": "alice@example.com"
+    }
+  ]
+}

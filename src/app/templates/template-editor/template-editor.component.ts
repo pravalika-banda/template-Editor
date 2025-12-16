@@ -28,6 +28,12 @@ export class TemplateEditorComponent implements AfterViewInit {
   activeFormats: any = {};
 
   // ========================
+  // TEMPLATE DETAILS
+  // ========================
+  templateName: string = ""; // <-- Added templateName
+  templateId: number | null = null; // optional if you want to track ID
+
+  // ========================
   // MENTIONS
   // ========================
   showMentions = false;
@@ -49,11 +55,37 @@ export class TemplateEditorComponent implements AfterViewInit {
   showLinkModal = false;
   linkText = "";
   linkUrl = "";
+
   constructor(
     private templateService: TemplateService,
     private router: Router,
-    private route:ActivatedRoute
+    private route: ActivatedRoute
   ) {}
+
+  selectedFile!: File;
+
+  onFileSelect(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  upload() {
+    if (!this.selectedFile) {
+      alert("Please select a file");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", this.selectedFile);
+
+    this.templateService.uploadFile(formData).subscribe({
+      next: (res) => {
+        console.log("Upload success", res);
+      },
+      error: (err) => {
+        console.error("Upload failed", err);
+      },
+    });
+  }
 
   // ========================
   // INIT
@@ -78,13 +110,13 @@ export class TemplateEditorComponent implements AfterViewInit {
 
     // 👇 LOAD TEMPLATE IF EDIT MODE
     const id = Number(this.route.snapshot.paramMap.get("id"));
-
     if (id) {
       this.isEditMode = true;
+      this.templateId = id;
 
       this.templateService.getTemplate(id).subscribe({
         next: (template) => {
-          // IMPORTANT: use pasteHTML
+          this.templateName = template.name; // <-- bind template name
           this.quill.clipboard.dangerouslyPasteHTML(template.content);
         },
         error: () => {
@@ -118,8 +150,6 @@ export class TemplateEditorComponent implements AfterViewInit {
     if (!range) return;
 
     const current = this.quill.getFormat(range);
-    this.quill.format(format, !current[format]);
-    // Toggle the format
     const value = !current[format];
     this.quill.format(format, value);
 
@@ -177,16 +207,13 @@ export class TemplateEditorComponent implements AfterViewInit {
     const content = this.quill.root.innerHTML;
 
     const payload = {
-      name: "My Template",
+      name: this.templateName, // <-- use templateName from input
       content: content,
     };
 
-    if (this.isEditMode) {
-      const templateId = 1; // ← real ID from route or state
-
-      this.templateService.updateTemplate(templateId, payload).subscribe({
+    if (this.isEditMode && this.templateId) {
+      this.templateService.updateTemplate(this.templateId, payload).subscribe({
         next: (res) => {
-          console.log("Updated:", res);
           alert("Template updated successfully");
           this.router.navigate(["/templates"]);
         },
@@ -198,7 +225,6 @@ export class TemplateEditorComponent implements AfterViewInit {
     } else {
       this.templateService.createTemplate(payload).subscribe({
         next: (res) => {
-          console.log("Created:", res);
           alert("Template saved successfully");
           this.router.navigate(["/templates"]);
         },
@@ -218,9 +244,20 @@ export class TemplateEditorComponent implements AfterViewInit {
       const file = input.files?.[0];
       if (!file) return;
 
-      const range = this.quill.getSelection(true);
-      this.quill.insertText(range.index, file.name, {
-        link: "#",
+      const formData = new FormData();
+      formData.append("file", file);
+
+      this.templateService.uploadFile(formData).subscribe({
+        next: (res: any) => {
+          const range = this.quill.getSelection(true) || { index: 0 };
+
+          this.quill.insertText(range.index, file.name, {
+            link: res.fileUrl, // REAL FILE LINK
+          });
+
+          this.quill.setSelection(range.index + file.name.length);
+        },
+        error: () => alert("File upload failed"),
       });
     };
 
@@ -287,7 +324,6 @@ export class TemplateEditorComponent implements AfterViewInit {
 
       const bounds = this.quill.getBounds(range.index);
 
-      // CRITICAL FIX: position relative to editor
       this.mentionTop = bounds.top + bounds.height + 8;
       this.mentionLeft = bounds.left;
 
